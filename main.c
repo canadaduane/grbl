@@ -49,6 +49,7 @@ int main(void)
   serial_init(); // Setup serial baud rate and interrupts
   settings_init(); // Load grbl settings from EEPROM
   st_init(); // Setup stepper pins and interrupt timers
+  cs_ui_init(); // Set camera slider user interface pins and state
   sei(); // Enable interrupts
   
   memset(&sys, 0, sizeof(sys));  // Clear all system variables
@@ -66,7 +67,6 @@ int main(void)
       plan_init(); // Clear block buffer and planner variables
       gc_init(); // Set g-code parser to default state
       protocol_init(); // Clear incoming line data and execute startup lines
-      camera_slider_ui_init(); // Set camera slider user interface pins and state
       spindle_init();
       coolant_init();
       limits_init();
@@ -104,7 +104,6 @@ int main(void)
     
     protocol_execute_runtime();
     protocol_process(); // ... process the serial protocol
-    camera_slider_ui_process();
   }
   return 0;   /* never reached */
 }

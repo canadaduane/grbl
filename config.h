@@ -73,26 +73,27 @@
 #define COOLANT_FLOOD_PORT  PORTC
 #define COOLANT_FLOOD_BIT   3  // Uno Analog Pin 3
 
-// NOTE: Uno analog pins 4 and 5 are reserved for an i2c interface, and may be installed at
-// a later date if flash and memory space allows.
-// #define ENABLE_M7  // Mist coolant disabled by default. Uncomment to enable.
-#ifdef ENABLE_M7
-  #define COOLANT_MIST_DDR   DDRC
-  #define COOLANT_MIST_PORT  PORTC
-  #define COOLANT_MIST_BIT   4 // Uno Analog Pin 4
-#endif  
+// #define SLIDER_DDR                DDRC
+// #define SLIDER_PORT               PORTC
+// #define SLIDER_LEFT_BUTTON_BIT    0 // Uno Analog Pin 0
+// #define SLIDER_RIGHT_BUTTON_BIT   1 // Uno Analog Pin 1
+// #define SLIDER_SPEED_BIT          2 // Uno Analog Pin 2
+// #define SLIDER_MASK ((1<<SLIDER_LEFT_BUTTON_BIT)|(1<<SLIDER_RIGHT_BUTTON_BIT)|(1<<SLIDER_SPEED_BIT))
 
 // NOTE: All pinouts pins must be on the same port
 #define PINOUT_DDR       DDRC
 #define PINOUT_PIN       PINC
 #define PINOUT_PORT      PORTC
-#define PIN_RESET        0  // Uno Analog Pin 0
-#define PIN_FEED_HOLD    1  // Uno Analog Pin 1
-#define PIN_CYCLE_START  2  // Uno Analog Pin 2
+// #define PIN_RESET        0  // Uno Analog Pin 0
+// #define PIN_FEED_HOLD    1  // Uno Analog Pin 1
+// #define PIN_CYCLE_START  2  // Uno Analog Pin 2
+#define PIN_SLIDER_LEFT  0  // Uno Analog Pin 0
+#define PIN_SLIDER_RIGHT 1  // Uno Analog Pin 1
+#define PIN_SPEED_POT    2  // Uno Analog Pin 2
 #define PINOUT_INT       PCIE1  // Pin change interrupt enable pin
 #define PINOUT_INT_vect  PCINT1_vect
 #define PINOUT_PCMSK     PCMSK1 // Pin change interrupt register
-#define PINOUT_MASK ((1<<PIN_RESET)|(1<<PIN_FEED_HOLD)|(1<<PIN_CYCLE_START))
+#define PINOUT_MASK ((1<<PIN_SLIDER_LEFT)|(1<<PIN_SLIDER_RIGHT)|(1<<PIN_SPEED_POT))
 
 // Define runtime command special characters. These characters are 'picked-off' directly from the
 // serial read data stream and are not passed to the grbl line execution parser. Select characters

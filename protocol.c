@@ -31,6 +31,7 @@
 #include "stepper.h"
 #include "report.h"
 #include "motion_control.h"
+#include "camera_slider_ui.h"
 
 static char line[LINE_BUFFER_SIZE]; // Line to be executed. Zero-terminated.
 static uint8_t char_counter; // Last character counter in line variable.
@@ -73,12 +74,15 @@ ISR(PINOUT_INT_vect)
 {
   // Enter only if any pinout pin is actively low.
   if ((PINOUT_PIN & PINOUT_MASK) ^ PINOUT_MASK) { 
-    if (bit_isfalse(PINOUT_PIN,bit(PIN_RESET))) {
-      mc_reset();
-    } else if (bit_isfalse(PINOUT_PIN,bit(PIN_FEED_HOLD))) {
-      sys.execute |= EXEC_FEED_HOLD; 
-    } else if (bit_isfalse(PINOUT_PIN,bit(PIN_CYCLE_START))) {
-      sys.execute |= EXEC_CYCLE_START;
+    if (bit_isfalse(PINOUT_PIN,bit(PIN_SLIDER_LEFT))) {
+      printString("left\r\n");
+      cs_ui_set_direction(CS_DIR_LEFT);
+      sys.execute |= EXEC_SLIDER_UI;
+    }
+    if (bit_isfalse(PINOUT_PIN,bit(PIN_SLIDER_RIGHT))) {
+      printString("right\r\n");
+      cs_ui_set_direction(CS_DIR_RIGHT);
+      sys.execute |= EXEC_SLIDER_UI;
     }
   }
 }
@@ -157,6 +161,11 @@ void protocol_execute_runtime()
         sys.auto_start = true; // Re-enable auto start after feed hold.
       }
       bit_false(sys.execute,EXEC_CYCLE_START);
+    }
+
+    if (rt_exec & EXEC_SLIDER_UI) {
+      cs_ui_motion_start();
+      bit_false(sys.execute,EXEC_SLIDER_UI);
     }
   }
   
