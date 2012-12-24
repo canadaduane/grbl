@@ -72,6 +72,8 @@ void protocol_execute_startup()
 // directly from the incoming serial data stream.
 ISR(PINOUT_INT_vect) 
 {
+  if (PINOUT_PIN & PIN_SLIDER_LEFT) printString("left high\r\n"); else printString("left low\r\n");
+  if (PINOUT_PIN & PIN_SLIDER_RIGHT) printString("right high\r\n"); else printString("right low\r\n");
   // Enter only if any pinout pin is actively low.
   if ((PINOUT_PIN & PINOUT_MASK) ^ PINOUT_MASK) { 
     if (bit_isfalse(PINOUT_PIN,bit(PIN_SLIDER_LEFT))) {
@@ -166,6 +168,7 @@ void protocol_execute_runtime()
     if (rt_exec & EXEC_SLIDER_UI) {
       cs_ui_motion_start();
       bit_false(sys.execute,EXEC_SLIDER_UI);
+      bit_true(sys.execute,EXEC_CYCLE_START);
     }
   }
   
