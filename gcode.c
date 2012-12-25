@@ -71,7 +71,7 @@ void gc_set_current_position(int32_t x, int32_t y, int32_t z)
   gc.position[Z_AXIS] = z/settings.steps_per_mm[Z_AXIS]; 
 }
 
-static float to_millimeters(float value) 
+float to_millimeters(float value) 
 {
   return(gc.inches_mode ? (value * MM_PER_INCH) : value);
 }

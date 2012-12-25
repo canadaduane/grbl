@@ -1,0 +1,1 @@
+make && avrdude -pm328p -carduino -P/dev/tty.usbmodem1421 -D -Uflash:w:grbl.hex

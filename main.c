@@ -41,7 +41,8 @@
 #include "camera_slider_ui.h"
 
 // Declare system global variable structure
-system_t sys; 
+system_t sys;
+long main_loop_count = 0;
 
 int main(void)
 {
@@ -104,6 +105,8 @@ int main(void)
     
     protocol_execute_runtime();
     protocol_process(); // ... process the serial protocol
+
+    main_loop_count++;
   }
   return 0;   /* never reached */
 }

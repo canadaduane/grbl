@@ -37,6 +37,8 @@ static char line[LINE_BUFFER_SIZE]; // Line to be executed. Zero-terminated.
 static uint8_t char_counter; // Last character counter in line variable.
 static uint8_t iscomment; // Comment/block delete flag for processor to ignore comment characters.
 
+extern long main_loop_count;
+static long pinout_int_loop_count = 0;
 
 void protocol_init() 
 {
@@ -70,20 +72,16 @@ void protocol_execute_startup()
 // only the runtime command execute variable to have the main program execute these when 
 // its ready. This works exactly like the character-based runtime commands when picked off
 // directly from the incoming serial data stream.
-ISR(PINOUT_INT_vect) 
+ISR(PINOUT_INT_vect)
 {
-  if (PINOUT_PIN & PIN_SLIDER_LEFT) printString("left high\r\n"); else printString("left low\r\n");
-  if (PINOUT_PIN & PIN_SLIDER_RIGHT) printString("right high\r\n"); else printString("right low\r\n");
-  // Enter only if any pinout pin is actively low.
-  if ((PINOUT_PIN & PINOUT_MASK) ^ PINOUT_MASK) { 
-    if (bit_isfalse(PINOUT_PIN,bit(PIN_SLIDER_LEFT))) {
-      printString("left\r\n");
-      cs_ui_set_direction(CS_DIR_LEFT);
+  if ((PINOUT_PIN & PINOUT_MASK) && main_loop_count > pinout_int_loop_count + 1000) {
+    pinout_int_loop_count = main_loop_count;
+    if (bit_istrue(PINOUT_PIN,bit(PIN_SLIDER_LEFT))) {
+      cs_direction = CS_DIR_LEFT;
       sys.execute |= EXEC_SLIDER_UI;
     }
-    if (bit_isfalse(PINOUT_PIN,bit(PIN_SLIDER_RIGHT))) {
-      printString("right\r\n");
-      cs_ui_set_direction(CS_DIR_RIGHT);
+    if (bit_istrue(PINOUT_PIN,bit(PIN_SLIDER_RIGHT))) {
+      cs_direction = CS_DIR_RIGHT;
       sys.execute |= EXEC_SLIDER_UI;
     }
   }
@@ -168,7 +166,6 @@ void protocol_execute_runtime()
     if (rt_exec & EXEC_SLIDER_UI) {
       cs_ui_motion_start();
       bit_false(sys.execute,EXEC_SLIDER_UI);
-      bit_true(sys.execute,EXEC_CYCLE_START);
     }
   }
   

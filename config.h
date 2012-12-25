@@ -93,7 +93,7 @@
 #define PINOUT_INT       PCIE1  // Pin change interrupt enable pin
 #define PINOUT_INT_vect  PCINT1_vect
 #define PINOUT_PCMSK     PCMSK1 // Pin change interrupt register
-#define PINOUT_MASK ((1<<PIN_SLIDER_LEFT)|(1<<PIN_SLIDER_RIGHT)|(1<<PIN_SPEED_POT))
+#define PINOUT_MASK ((1<<PIN_SLIDER_LEFT)|(1<<PIN_SLIDER_RIGHT))
 
 // Define runtime command special characters. These characters are 'picked-off' directly from the
 // serial read data stream and are not passed to the grbl line execution parser. Select characters

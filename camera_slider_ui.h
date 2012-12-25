@@ -5,14 +5,20 @@
 #define CS_DIR_LEFT  1
 #define CS_DIR_RIGHT 2
 
-extern uint8_t cs_direction;
+extern volatile uint8_t cs_direction;
 
 void cs_ui_init();
 
+void cs_ui_display_state();
+
 void cs_ui_motion_start();
 
-void cs_ui_set_direction(uint8_t dir);
+void cs_ui_apply_speed();
 
-void cs_ui_get_speed();
+int cs_analog_read(uint8_t pin);
+
+#ifndef sbi
+  #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
+#endif
 
 #endif 

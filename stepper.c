@@ -27,6 +27,7 @@
 #include "config.h"
 #include "settings.h"
 #include "planner.h"
+#include "print.h"
 
 // Some useful constants
 #define TICKS_PER_MICROSECOND (F_CPU/1000000)
