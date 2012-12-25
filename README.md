@@ -1,5 +1,7 @@
-#Grbl - An embedded g-code interpreter and motion-controller for the Arduino/AVR328 microcontroller
+#Grbl (MakerSlider) - An embedded g-code interpreter and motion-controller for the Arduino/AVR328 microcontroller
 ------------
+
+This fork of Grbl adds a button/speed control UI for the MakerSlider single-axis camera slider project. See http://makerslider.com/
 
 Grbl is a no-compromise, high performance, low cost alternative to parallel-port-based motion control for CNC milling. It will run on a vanilla Arduino (Duemillanove/Uno) as long as it sports an Atmega 328. 
 
