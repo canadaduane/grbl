@@ -40,7 +40,7 @@ void cs_ui_display_state() {
   printString("\r\n");
 }
 
-static char *move_left = "G1Z100";
+static char *move_left = "G1Z180";
 static char *move_right = "G1Z0";
 
 void cs_ui_motion_start()
@@ -51,9 +51,6 @@ void cs_ui_motion_start()
 
     cs_ui_apply_speed();
 
-    // printString("Speed: ");
-    // printInteger(speed);
-    // printString("\r\n");
     switch(dir)
     {
       case CS_DIR_NONE:
@@ -83,10 +80,7 @@ void cs_ui_apply_speed()
   long speed;
   
   speed = (long)cs_analog_read(2);
-  printString("Speed: ");
-  printInteger(speed);
-  printString("\r\n");
-  gc.feed_rate = to_millimeters(speed*2 + 500);
+  gc.feed_rate = to_millimeters(speed*250/100+1);
 
   return ;
 }

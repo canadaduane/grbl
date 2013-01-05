@@ -204,11 +204,11 @@ uint8_t settings_store_global_setting(int parameter, float value) {
 
 // Initialize the config subsystem
 void settings_init() {
-  if(!read_global_settings()) {
-    report_status_message(STATUS_SETTING_READ_FAIL);
+  // if(!read_global_settings()) {
+    // report_status_message(STATUS_SETTING_READ_FAIL);
     settings_reset(true);
     report_grbl_settings();
-  }
+  // }
   // Read all parameter data into a dummy variable. If error, reset to zero, otherwise do nothing.
   float coord_data[N_AXIS];
   uint8_t i;

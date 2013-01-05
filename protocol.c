@@ -78,11 +78,11 @@ ISR(PINOUT_INT_vect)
     pinout_int_loop_count = main_loop_count;
     if (bit_istrue(PINOUT_PIN,bit(PIN_SLIDER_LEFT))) {
       cs_direction = CS_DIR_LEFT;
-      sys.execute |= EXEC_SLIDER_UI;
+      bit_true(sys.execute, EXEC_SLIDER_UI);
     }
     if (bit_istrue(PINOUT_PIN,bit(PIN_SLIDER_RIGHT))) {
       cs_direction = CS_DIR_RIGHT;
-      sys.execute |= EXEC_SLIDER_UI;
+      bit_true(sys.execute, EXEC_SLIDER_UI);
     }
   }
 }
@@ -164,7 +164,11 @@ void protocol_execute_runtime()
     }
 
     if (rt_exec & EXEC_SLIDER_UI) {
-      cs_ui_motion_start();
+      if (sys.state == STATE_IDLE) {
+        cs_ui_motion_start();
+      } else {
+        bit_true(sys.execute, EXEC_RESET);
+      }
       bit_false(sys.execute,EXEC_SLIDER_UI);
     }
   }

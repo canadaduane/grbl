@@ -87,8 +87,8 @@
 // #define PIN_RESET        0  // Uno Analog Pin 0
 // #define PIN_FEED_HOLD    1  // Uno Analog Pin 1
 // #define PIN_CYCLE_START  2  // Uno Analog Pin 2
-#define PIN_SLIDER_LEFT  0  // Uno Analog Pin 0
-#define PIN_SLIDER_RIGHT 1  // Uno Analog Pin 1
+#define PIN_SLIDER_RIGHT 0  // Uno Analog Pin 0
+#define PIN_SLIDER_LEFT  1  // Uno Analog Pin 1
 #define PIN_SPEED_POT    2  // Uno Analog Pin 2
 #define PINOUT_INT       PCIE1  // Pin change interrupt enable pin
 #define PINOUT_INT_vect  PCINT1_vect
